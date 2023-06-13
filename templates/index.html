@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BMI Calculator</title>
+    <style>
+        /* CSS styles */
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        #bmi-info {
+            text-align: center;
+            font-size: 16px;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+        }
+
+        .underweight {
+            color: #f44336; /* Red */
+        }
+
+        .normal {
+            color: #4caf50; /* Green */
+        }
+
+        .overweight {
+            color: #ff9800; /* Orange */
+        }
+
+        .obese {
+            color: #f44336; /* Red */
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('form').submit(function(event) {
+                event.preventDefault();  // Prevent the default form submission behavior
+
+                var weight = parseFloat($('#weight').val());
+                var height = parseFloat($('#height').val());
+
+                // Perform the BMI calculation on the client-side
+                var bmi = weight / (height * height);
+                bmi = bmi.toFixed(2);  // Round the BMI to 2 decimal places
+
+                // Update the result element with the calculated BMI and apply color based on the scale
+                var resultElement = $('#result');
+                resultElement.text('Your BMI is: ' + bmi);
+                resultElement.removeClass();  // Remove any previous classes
+
+                if (bmi < 18.5) {
+                    resultElement.addClass('underweight');
+                    resultElement.append('<p class="message">You are underweight. It is important to maintain a healthy weight. Consider consulting a healthcare professional or nutritionist for guidance.</p>');
+                } else if (bmi >= 18.5 && bmi < 25) {
+                    resultElement.addClass('normal');
+                    resultElement.append('<p class="message">Congratulations! You have a normal BMI. Keep up the good work by maintaining a healthy lifestyle.</p>');
+                } else if (bmi >= 25 && bmi < 30) {
+                    resultElement.addClass('overweight');
+                    resultElement.append('<p class="message">You are overweight. It is advisable to focus on healthy eating habits and engage in regular physical activity to improve your BMI.</p>');
+                } else {
+                    resultElement.addClass('obese');
+                    resultElement.append('<p class="message">You are obese. It is important to take immediate action for your health. Consider consulting a healthcare professional or nutritionist for personalized advice and support.</p>');
+                }
+
+                // Display the paragraph about the importance of BMI
+                $('#bmi-info').text('BMI is an important indicator of your overall health and can help assess the risk of certain health conditions. However, please note that BMI is a general measure and may not take into account individual variations in body composition and muscle mass.');
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>BMI Calculator</h1>
+        <form>
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" name="weight" required>
+            <br><br>
+            <label for="height">Height (m):</label>
+            <input type="number" id="height" name="height" step="0.01" required>
+            <br><br>
+            <input type="submit" value="Calculate BMI">
+        </form>
+        <div id="result"></div>
+        <div id="bmi-info"></div>
+    </div>
+</body>
+</html>
